@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class confirm
 {
     /**
      * Handle an incoming request.
@@ -17,12 +17,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-if(Auth::user()->email_verified_at	 == Null){
+if(Auth::user()->email_verified_at == Null){
     return redirect()->route('confirm');
-}else{
+}else if(Auth::user()->email_verified_at != Null){
     return redirect()->route('admin.index');
 }
-
-        return $next($request);
+    return $next($request);
     }
 }

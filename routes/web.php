@@ -32,7 +32,6 @@ Route::prefix('')->middleware('confirmEmail','auth')->group(function(){
     Route::get('confirm',[LoginController::class,'confirm'])->name('confirm');
     Route::post('ConfirmPost',[LoginController::class,'ConfirmPost'])->name('ConfirmPost');
 
-
     Route::get('home',[LoginController::class,'home'])->name('home');
 
 });

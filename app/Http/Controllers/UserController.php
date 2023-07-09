@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
@@ -19,17 +20,36 @@ class UserController extends Controller
     public function index()
     {
         $page='Index';
-
+        $User=Auth::user();
+        $User=[Auth::user()];
+$result=true;
+        if($User[0]->type=='admin'){
         $User=User::latest()->get();
-       return view('Admin/User/index')->with('User',$User)->with('page',$page);
+
+    }
+       return view('Admin/User/index',compact('User','page','result'));
     }
 
 
     public function trash()
     {
         $page='Trash';
-          $User=User::onlyTrashed()->latest()->get();
-        return view('Admin/User/index')->with('User',$User)->with('page',$page);
+        $result=true;
+        $User1=Auth::user();
+
+        $User=[$User1->onlyTrashed];
+        if($User[0]){
+            $User=[$User1->onlyTrashed->get()];
+        }else{
+            $result=false;
+        }
+        if($User1->type=='admin'){
+        $User=User::onlyTrashed()->latest()->get();
+        $result=true;
+    }
+
+
+        return view('Admin/User/index')->with('User',$User)->with('result',$result)->with('page',$page);
     }
     /**
      * Show the form for creating a new resource.

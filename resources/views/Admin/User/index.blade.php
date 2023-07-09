@@ -64,6 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
+@if($result)
                         @foreach($User as $item)
 
                         <tr>
@@ -113,6 +114,7 @@
 
 
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
